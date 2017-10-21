@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">QuizJDan</string>
+    <string name="design_text_question">Here is the question</string>
+    <string name="text_true">True</string>
+    <string name="text_false">False</string>
+    <string name="text_next">Next</string>
+
+    <string name="results">RESULTS</string>
+    <string name="results_placeholder">RESULTS PLACEHOLDER</string>
+    <string name="title_results">Results</string>
+</resources>

@@ -1,0 +1,12 @@
+{
+  "questions": [
+    {
+      "answer": false,
+      "statement": "The moon is made of cheese"
+    },
+    {
+      "answer": true,
+      "statement": "The sum of the internal angles of a triangle is 180"
+    }
+  ]
+}
