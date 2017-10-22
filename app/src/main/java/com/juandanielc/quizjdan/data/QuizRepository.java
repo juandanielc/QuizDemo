@@ -1,6 +1,7 @@
 package com.juandanielc.quizjdan.data;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.squareup.moshi.JsonAdapter;
@@ -20,14 +21,11 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.moshi.MoshiConverterFactory;
 
-/**
- * Created by JDan on 19/10/2017.
- */
-
 public class QuizRepository {
 
     private static final String LOG_TAG = QuizRepository.class.getSimpleName();
     private static final List<String> QUIZ_JSON = Arrays.asList("quiz.json", "quiz2.json");
+    private static final String BASE_URL = "http://juandanielc.com/";
     private Context context;
 
     public QuizRepository(Context context) {
@@ -47,8 +45,7 @@ public class QuizRepository {
         JsonAdapter<Quiz> jsonAdapter = moshi.adapter(Quiz.class);
 
         try {
-            Quiz quiz = jsonAdapter.fromJson(Okio.buffer(Okio.source(assetInputStream)));
-            return quiz;
+            return jsonAdapter.fromJson(Okio.buffer(Okio.source(assetInputStream)));
         } catch (IOException e) {
             Log.e(LOG_TAG, "Could open quiz parse json 2 step", e);
             return null;
@@ -61,7 +58,7 @@ public class QuizRepository {
 
         service.getQuizzes().enqueue(new retrofit2.Callback<List<Quiz>>() {
             @Override
-            public void onResponse(Call<List<Quiz>> call, Response<List<Quiz>> response) {
+            public void onResponse(@NonNull Call<List<Quiz>> call, @NonNull Response<List<Quiz>> response) {
                 if (response.isSuccessful()) {
                     callback.onSuccess(response.body());
                 } else {
@@ -70,7 +67,7 @@ public class QuizRepository {
             }
 
             @Override
-            public void onFailure(Call<List<Quiz>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<Quiz>> call, @NonNull Throwable t) {
                 callback.onFailure();
             }
         });
@@ -82,7 +79,7 @@ public class QuizRepository {
         Log.e(LOG_TAG, "getRemoteQuiz 2");
         service.getQuiz(id).enqueue(new retrofit2.Callback<Quiz>() {
             @Override
-            public void onResponse(Call<Quiz> call, Response<Quiz> response) {
+            public void onResponse(@NonNull Call<Quiz> call, @NonNull Response<Quiz> response) {
                 Log.e(LOG_TAG, "onResponse");
                 if (response.isSuccessful()) {
                     callback.onSuccess(response.body());
@@ -92,7 +89,7 @@ public class QuizRepository {
             }
 
             @Override
-            public void onFailure(Call<Quiz> call, Throwable t) {
+            public void onFailure(@NonNull Call<Quiz> call, @NonNull Throwable t) {
                 Log.e(LOG_TAG, "onFailure");
                 callback.onFailure();
             }
@@ -124,7 +121,7 @@ public class QuizRepository {
                 .build();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://oolong.tahnok.me/")
+                .baseUrl(BASE_URL)
                 .client(okHttpClient)
                 .addConverterFactory(MoshiConverterFactory.create())
                 .build();
