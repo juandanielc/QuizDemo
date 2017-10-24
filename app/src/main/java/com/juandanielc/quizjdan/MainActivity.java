@@ -211,7 +211,7 @@ public class MainActivity extends AppCompatActivity implements QuizRepository.Ca
             index = 0;
             Intent resultIntent = new Intent(this, ResultActivity.class);
             resultIntent.putExtra(ResultActivity.KEY_SCORE, scoreValue);
-            resultIntent.putExtra(ResultActivity.KEY_TOTAL, Quiz.getInstance().getQuestions().size());
+            resultIntent.putExtra(ResultActivity.KEY_TOTAL, quiz.getQuestions().size());
             startActivity(resultIntent);
             scoreValue = 0;
         }

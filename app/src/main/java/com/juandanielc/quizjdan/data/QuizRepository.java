@@ -27,6 +27,7 @@ public class QuizRepository {
     private static final List<String> QUIZ_JSON = Arrays.asList("quiz.json", "quiz2.json");
     private static final String BASE_URL = "http://juandanielc.com/";
     private Context context;
+    private Cache cache;
 
     public QuizRepository(Context context) {
         this.context = context;
@@ -114,7 +115,7 @@ public class QuizRepository {
         int cacheSize = 10 * 1024 * 1024; // 10 MB
 
         File httpCacheDirecotory = new File(context.getCacheDir(), "http-cache");
-        Cache cache = new Cache(httpCacheDirecotory, cacheSize);
+        cache = new Cache(httpCacheDirecotory, cacheSize);
 
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .cache(cache)
@@ -139,5 +140,9 @@ public class QuizRepository {
         void onFailure();
 
         void onSuccess(List<Quiz> quizzes);
+    }
+
+    public void clearCache() throws IOException {
+        cache.evictAll();
     }
 }
